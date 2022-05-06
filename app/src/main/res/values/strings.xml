@@ -10,4 +10,8 @@
     <string name="traductor_de_audio">TRADUCTOR DE AUDIO</string>
     <string name="traduccion_de_texto">TRADUCCION DE TEXTO</string>
     <string name="no_connection">No internet connection! Cannot be translated!</string>
+    <string name="introduce_el_texto_a_traducir">Introduce el texto a traducir:</string>
+    <string name="traducir">TRADUCIR</string>
+    <string name="textview">TextView</string>
+    <string name="idioma">IDIOMA</string>
 </resources>

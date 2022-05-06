@@ -1,5 +1,6 @@
 package com.example.lore1
 
+import android.app.AlertDialog
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
@@ -20,6 +21,11 @@ class TraduccionTexto : AppCompatActivity() {
     private var texto: EditText? = null
     private var boton: Button? = null
     private var traduccion: TextView? = null
+    private var select_idioma: Button? = null
+
+    private val options = arrayOf("English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi")
+    private var defaultPosition = 0
+    private var target_language = "en"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +34,31 @@ class TraduccionTexto : AppCompatActivity() {
         texto = findViewById(R.id.cajita_texto)
         boton = findViewById(R.id.boton_traducir)
         traduccion = findViewById(R.id.ver_traduccion)
+        select_idioma = findViewById(R.id.selec_idioma)
+
+        select_idioma!!.setOnClickListener {
+            val builderSingle = AlertDialog.Builder(this)
+            builderSingle.setTitle("Select")
+            builderSingle.setPositiveButton(getString(android.R.string.ok)) { dialog, _ -> dialog.dismiss() }
+            builderSingle.setSingleChoiceItems(options, defaultPosition) { _, which ->
+                defaultPosition = which
+                when(options[which]) {
+                    "English" -> target_language = "en"
+                    "Spanish" -> target_language = "es"
+                    "Portuguese" -> target_language = "pt"
+                    "Catalan" -> target_language = "ca"
+                    "French" -> target_language = "fr"
+                    "Chinese" -> target_language = "zh-CN"
+                    "German" -> target_language = "de"
+                    "Russian" -> target_language = "ru"
+                    "Euskera" -> target_language = "eu"
+                    "Japanese" -> target_language = "ja"
+                    "Hindi" -> target_language = "hi"
+                }
+            }
+            builderSingle.show()
+        }
+
 
         boton!!.setOnClickListener {
             var resultado = texto!!.text.toString()
@@ -67,7 +98,7 @@ class TraduccionTexto : AppCompatActivity() {
 
         //Get input text to be translated:
         val originalText: String = texto!!.text.toString()
-        val translation = translate!!.translate(originalText, Translate.TranslateOption.targetLanguage("en"), Translate.TranslateOption.model("base"))
+        val translation = translate!!.translate(originalText, Translate.TranslateOption.targetLanguage(target_language), Translate.TranslateOption.model("base"))
 
         //Translated text and original text are set to TextViews:
         traduccion!!.text = translation.translatedText
