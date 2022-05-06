@@ -5,4 +5,9 @@
     <string name="login">LOGIN</string>
     <string name="sign_in">SIGN IN</string>
     <string name="lore">LORE</string>
+    <string name="try_it">TRY IT!</string>
+    <string name="traductor_de_texto">TRADUCTOR DE TEXTO</string>
+    <string name="traductor_de_audio">TRADUCTOR DE AUDIO</string>
+    <string name="traduccion_de_texto">TRADUCCION DE TEXTO</string>
+    <string name="no_connection">No internet connection! Cannot be translated!</string>
 </resources>
