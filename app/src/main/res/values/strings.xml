@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">lore1</string>
+    <string name="button">Button</string>
+    <string name="tryit">Try it!</string>
+    <string name="login">LOGIN</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="lore">LORE</string>
+</resources>

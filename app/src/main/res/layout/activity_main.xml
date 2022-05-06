@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
+
+            <Button
+                android:id="@+id/try_it"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="158dp"
+                android:layout_marginTop="180dp"
+                android:layout_marginEnd="159dp"
+                android:layout_marginBottom="446dp"
+                android:text="@string/tryit"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="158dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="159dp"
+                android:text="@string/login"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/try_it" />
+
+            <Button
+                android:id="@+id/signin"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="158dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginEnd="159dp"
+                android:layout_marginBottom="284dp"
+                android:text="@string/sign_in"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/login" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="413dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:ems="10"
+                android:fontFamily="casual"
+                android:inputType="textPersonName"
+                android:text="@string/lore"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:autofillHints="" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="374dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="120dp"
+                android:text="Many features are available in LORE: real time traduction, sentiment analysis, and a lot more!"
+                app:layout_constraintBottom_toTopOf="@+id/try_it"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
