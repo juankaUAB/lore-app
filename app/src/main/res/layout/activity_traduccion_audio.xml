@@ -70,7 +70,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editAudioAudioPersonName"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+        app:srcCompat="@android:drawable/ic_btn_speak_now"
+        android:onClick="startRecording" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/original_pause_button"
@@ -85,7 +86,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/original_audio_button"
-        app:srcCompat="@android:drawable/ic_media_pause" />
+        app:srcCompat="@android:drawable/ic_media_pause"
+        android:onClick="stopRecording" />
 
     <TextView
         android:id="@+id/audio_escuchado"
