@@ -1,11 +1,18 @@
 package com.example.lore1;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import android.content.ContentResolver;
@@ -17,6 +24,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.api.gax.core.CredentialsProvider;
@@ -34,6 +42,7 @@ public class TraduccionAudio extends AppCompatActivity {
     Uri audiofile_uri = null;
     static final String TAG = "MediaRecording";
     FloatingActionButton startButton,stopButton;
+    TextView texto_escuchado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,7 @@ public class TraduccionAudio extends AppCompatActivity {
         setContentView(R.layout.activity_traduccion_audio);
         startButton = (FloatingActionButton) findViewById(R.id.original_audio_button);
         stopButton = (FloatingActionButton) findViewById(R.id.original_pause_button);
+        texto_escuchado = findViewById(R.id.audio_escuchado);
     }
 
 
@@ -48,7 +58,7 @@ public class TraduccionAudio extends AppCompatActivity {
         startButton.setEnabled(false);
         stopButton.setEnabled(true);
         //Creating file
-        File dir = Environment.getExternalStorageDirectory();
+        File dir = Environment.getDataDirectory();
         try {
             audiofile = File.createTempFile("sound", ".3gp", null);
         } catch (IOException e) {
@@ -58,8 +68,8 @@ public class TraduccionAudio extends AppCompatActivity {
         //Creating MediaRecorder and specifying audio source, output format, encoder & output format
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.AMR_WB);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_WB);
         recorder.setOutputFile(audiofile.getAbsolutePath());
         recorder.prepare();
         recorder.start();
@@ -70,6 +80,7 @@ public class TraduccionAudio extends AppCompatActivity {
         stopButton.setEnabled(false);
         //stopping recorder
         recorder.stop();
+        recorder.reset();
         recorder.release();
         //after stopping the recorder, create the sound file and add it to media library.
         addRecordingToMediaLibrary();
@@ -97,30 +108,36 @@ public class TraduccionAudio extends AppCompatActivity {
         Toast.makeText(this, "Added File " + newUri, Toast.LENGTH_LONG).show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void speechtotext() throws IOException {
         InputStream stream = getResources().openRawResource(R.raw.credentials);
         CredentialsProvider credentialsProvider = FixedCredentialsProvider.create(ServiceAccountCredentials.fromStream(stream));
         SpeechSettings setting = SpeechSettings.newBuilder().setCredentialsProvider(credentialsProvider).build();
         SpeechClient client = SpeechClient.create(setting);
 
-        //ByteString fileByteString = ByteString.copyFrom(audiofile).readBytes();
+        Path path = Paths.get(audiofile.getAbsolutePath());
+        byte[] content = Files.readAllBytes(path);
 
-        RecognitionConfig config =
+        RecognitionConfig recConfig =
                 RecognitionConfig.newBuilder()
-                        .setEncoding(RecognitionConfig.AudioEncoding.LINEAR16)
+                        // encoding may either be omitted or must match the value in the file header
+                        .setEncoding(RecognitionConfig.AudioEncoding.AMR_WB)
+                        .setLanguageCode("en-US")
+                        // sample rate hertz may be either be omitted or must match the value in the file
+                        // header
                         .setSampleRateHertz(16000)
-                        .setLanguageCode("es-ES")
+                        .setModel("video")
                         .build();
-        RecognitionAudio audio = RecognitionAudio.newBuilder().setUri(String.valueOf(audiofile_uri)).build();
-        // Performs speech recognition on the audio file
-        RecognizeResponse response = client.recognize(config, audio);
-        List<SpeechRecognitionResult> results = response.getResultsList();
 
-        for (SpeechRecognitionResult result : results) {
-            // There can be several alternative transcripts for a given chunk of speech. Just use the
-            // first (most likely) one here.
-            SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
-            System.out.printf("Transcription: %s%n", alternative.getTranscript());
-        }
+        RecognitionAudio recognitionAudio =
+                RecognitionAudio.newBuilder().setContent(ByteString.copyFrom(content)).build();
+        // Performs speech recognition on the audio file
+        RecognizeResponse recognizeResponse = client.recognize(recConfig, recognitionAudio);
+        // Just print the first result here.
+        SpeechRecognitionResult result = recognizeResponse.getResultsList().get(0);
+        // There can be several alternative transcripts for a given chunk of speech. Just use the
+        // first (most likely) one here.
+        SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
+        texto_escuchado.setText(alternative.getTranscript());
     }
 }
