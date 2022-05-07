@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TraduccionAudio">
+
+    <EditText
+        android:id="@+id/editAudioAudioPersonName"
+        android:layout_width="413dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="30dp"
+        android:autofillHints=""
+        android:background="@color/teal_200"
+        android:ems="10"
+        android:fontFamily="casual"
+        android:inputType="textPersonName"
+        android:text="Traduccion de audio"
+        android:textAlignment="center"
+        android:textColor="#546E7A"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.968"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/selec_idioma_audio"
+        android:layout_width="125dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="288dp"
+        android:backgroundTint="@color/teal_200"
+        android:text="@string/idioma"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/boton_traducir_audio"
+        android:layout_width="121dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="244dp"
+        android:layout_marginEnd="58dp"
+        android:layout_marginBottom="288dp"
+        android:backgroundTint="@color/teal_200"
+        android:text="@string/traducir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/original_audio_button"
+        android:layout_width="59dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="95dp"
+        android:layout_marginTop="226dp"
+        android:layout_marginEnd="250dp"
+        android:layout_marginBottom="17dp"
+        android:clickable="true"
+        android:contentDescription="@string/traductor_de_audio"
+        app:layout_constraintBottom_toTopOf="@+id/selec_idioma_audio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAudioAudioPersonName"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/original_pause_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="119dp"
+        android:layout_marginEnd="85dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:contentDescription="@string/traductor_de_audio"
+        app:layout_constraintBottom_toTopOf="@+id/boton_traducir_audio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/original_audio_button"
+        app:srcCompat="@android:drawable/ic_media_pause" />
+
+    <TextView
+        android:id="@+id/audio_escuchado"
+        android:layout_width="287dp"
+        android:layout_height="164dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="59dp"
+        android:layout_marginEnd="58dp"
+        android:layout_marginBottom="32dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/original_audio_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAudioAudioPersonName" />
+
+    <TextView
+        android:id="@+id/audio_traducido"
+        android:layout_width="281dp"
+        android:layout_height="171dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginBottom="74dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boton_traducir_audio" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

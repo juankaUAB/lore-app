@@ -96,6 +96,7 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginStart="69dp"
+        android:layout_marginTop="69dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="88dp"
         android:backgroundTint="@color/teal_200"
@@ -104,6 +105,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/ver_traduccion"
         app:layout_constraintEnd_toStartOf="@+id/boton_traducir"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cajita_texto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
