@@ -1,8 +1,10 @@
 package com.example.lore1;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,11 +31,18 @@ import android.widget.Toast;
 
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.auth.Credentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.speech.v1.*;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.translate.Detection;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
+import com.google.cloud.translate.v3.TranslationServiceClient;
+import com.google.cloud.translate.v3beta1.TranslationServiceSettings;
 import com.google.protobuf.ByteString;
 
 public class TraduccionAudio extends AppCompatActivity {
@@ -43,6 +52,9 @@ public class TraduccionAudio extends AppCompatActivity {
     static final String TAG = "MediaRecording";
     FloatingActionButton startButton,stopButton;
     TextView texto_escuchado;
+    CharSequence[] options = new CharSequence[] {"English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi"};
+    int defaultOption = 0;
+    String target_language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,5 +151,54 @@ public class TraduccionAudio extends AppCompatActivity {
         // first (most likely) one here.
         SpeechRecognitionAlternative alternative = result.getAlternativesList().get(0);
         texto_escuchado.setText(alternative.getTranscript());
+    }
+
+    public void setLanguage(View view) {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle("Select");
+        builderSingle.setPositiveButton(android.R.string.ok, (dialog, which) -> { dialog.dismiss(); });
+        builderSingle.setSingleChoiceItems(options, defaultOption, (dialog1, item) -> {
+            defaultOption = item;
+            if ("English".equals(options[item])) {
+                target_language = "en";
+            } else if ("Spanish".equals(options[item])) {
+                target_language = "es";
+            } else if ("Portuguese".equals(options[item])) {
+                target_language = "pt";
+            } else if ("Catalan".equals(options[item])) {
+                target_language = "ca";
+            } else if ("French".equals(options[item])) {
+                target_language = "fr";
+            } else if ("Chinese".equals(options[item])) {
+                target_language = "zh-CN";
+            } else if ("German".equals(options[item])) {
+                target_language = "de";
+            } else if ("Russian".equals(options[item])) {
+                target_language = "ru";
+            } else if ("Euskera".equals(options[item])) {
+                target_language = "eu";
+            } else if ("Japanese".equals(options[item])) {
+                target_language = "ja";
+            } else if ("Hindi".equals(options[item])) {
+                target_language = "hi";
+            }
+        });
+        builderSingle.show();
+    }
+
+    public void translate(View view) throws IOException {
+        InputStream stream = getResources().openRawResource(R.raw.credentials);
+        CredentialsProvider credentialsProvider = FixedCredentialsProvider.create(ServiceAccountCredentials.fromStream(stream));
+        Translate translate = (Translate) TranslateOptions.newBuilder().setCredentials((Credentials) credentialsProvider).build();
+
+        Detection detection = translate.detect(String.valueOf(texto_escuchado.getText()));
+        String detectedLanguage = detection.getLanguage();
+
+        Translation translation = translate.translate(
+                String.valueOf(texto_escuchado.getText()),
+                Translate.TranslateOption.sourceLanguage(detectedLanguage),
+                Translate.TranslateOption.targetLanguage(target_language));
+        TextView caja_traduccion = findViewById(R.id.audio_traducido);
+        caja_traduccion.setText(translation.getTranslatedText());
     }
 }
