@@ -16,30 +16,30 @@
         android:ems="10"
         android:fontFamily="casual"
         android:inputType="textPersonName"
-        android:text="Traduccion de audio"
+        android:text="   TRADUCCIÓN DE AUDIO"
         android:textAlignment="center"
-        android:textColor="#546E7A"
+        android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.968"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/selec_idioma_audio"
         android:layout_width="125dp"
         android:layout_height="49dp"
-        android:layout_marginStart="69dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="288dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="250dp"
+        android:layout_marginBottom="268dp"
         android:backgroundTint="@color/teal_200"
+        android:onClick="setLanguage"
         android:text="@string/idioma"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        android:onClick="setLanguage"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/boton_traducir_audio"
@@ -47,14 +47,29 @@
         android:layout_height="50dp"
         android:layout_marginStart="244dp"
         android:layout_marginEnd="58dp"
-        android:layout_marginBottom="288dp"
+        android:layout_marginBottom="292dp"
         android:backgroundTint="@color/teal_200"
+        android:onClick="translate"
         android:text="@string/traducir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintStart_toStartOf="parent"
-        android:onClick="translate"/>
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/boton_sentimientos_audio"
+        android:layout_width="121dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="244dp"
+        android:layout_marginEnd="58dp"
+        android:layout_marginBottom="240dp"
+        android:backgroundTint="@android:color/holo_orange_dark"
+        android:onClick="translate"
+        android:text="EMOCIÓN"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/original_audio_button"
@@ -63,17 +78,17 @@
         android:layout_marginStart="95dp"
         android:layout_marginTop="226dp"
         android:layout_marginEnd="250dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="40dp"
         android:clickable="true"
         android:contentDescription="@string/traductor_de_audio"
+        android:onClick="startRecording"
         app:layout_constraintBottom_toTopOf="@+id/selec_idioma_audio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editAudioAudioPersonName"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@android:drawable/ic_btn_speak_now"
-        android:onClick="startRecording" />
+        app:layout_constraintVertical_bias="0.632"
+        app:srcCompat="@android:drawable/ic_btn_speak_now" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/original_pause_button"
@@ -81,15 +96,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="119dp"
         android:layout_marginEnd="85dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
         android:contentDescription="@string/traductor_de_audio"
+        android:onClick="stopRecording"
         app:layout_constraintBottom_toTopOf="@+id/boton_traducir_audio"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/original_audio_button"
-        app:srcCompat="@android:drawable/ic_media_pause"
-        android:onClick="stopRecording" />
+        app:srcCompat="@android:drawable/ic_media_pause" />
 
     <TextView
         android:id="@+id/audio_escuchado"
@@ -99,7 +114,7 @@
         android:layout_marginTop="59dp"
         android:layout_marginEnd="58dp"
         android:layout_marginBottom="32dp"
-        android:text="TextView"
+        android:text="Text to translate."
         app:layout_constraintBottom_toTopOf="@+id/original_audio_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,13 +125,12 @@
         android:layout_width="281dp"
         android:layout_height="171dp"
         android:layout_marginStart="69dp"
-        android:layout_marginTop="43dp"
         android:layout_marginEnd="61dp"
-        android:layout_marginBottom="74dp"
-        android:text="TextView"
+        android:layout_marginBottom="48dp"
+        android:text="Translated text."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/boton_traducir_audio" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

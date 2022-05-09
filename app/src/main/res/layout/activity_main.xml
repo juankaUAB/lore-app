@@ -8,10 +8,11 @@
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/marcoApp"
         android:layout_width="match_parent"
+
+
         android:layout_height="match_parent"
-
-
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,35 +67,38 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/login" />
 
-            <EditText
-                android:id="@+id/editTextTextPersonName"
-                android:layout_width="413dp"
-                android:layout_height="66dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="15dp"
-                android:ems="10"
-                android:fontFamily="casual"
-                android:inputType="textPersonName"
-                android:text="@string/lore"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:autofillHints="" />
-
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="374dp"
                 android:layout_height="36dp"
-                android:layout_marginTop="40dp"
                 android:layout_marginBottom="120dp"
                 android:text="Many features are available in LORE: real time traduction, sentiment analysis, and a lot more!"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/try_it"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.567"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextPersonName"
+                android:layout_width="413dp"
+                android:layout_height="66dp"
+                android:layout_marginStart="30dp"
+                android:autofillHints=""
+                android:background="@color/teal_200"
+                android:ems="10"
+                android:fontFamily="casual"
+                android:inputType="textPersonName"
+                android:text="  LORE"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.968"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TextContrastCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

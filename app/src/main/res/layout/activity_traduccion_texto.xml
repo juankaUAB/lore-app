@@ -6,25 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".TraduccionTexto">
 
+    <Button
+        android:id="@+id/boton_sentimientos"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="112dp"
+        android:layout_marginEnd="52dp"
+        android:backgroundTint="@android:color/holo_orange_dark"
+        android:text="EMOCIÓN"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cajita_texto" />
+
     <EditText
         android:id="@+id/editTextTextPersonName3"
         android:layout_width="413dp"
         android:layout_height="66dp"
         android:layout_marginStart="30dp"
+        android:autoText="false"
         android:autofillHints=""
         android:background="@color/teal_200"
         android:ems="10"
         android:fontFamily="casual"
         android:inputType="textPersonName"
-        android:text="@string/traduccion_de_texto"
+        android:text="   TRADUCCIÓN DE TEXTO"
         android:textAlignment="center"
-        android:textColor="#546E7A"
+        android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.968"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="276dp"
@@ -60,9 +75,8 @@
         android:id="@+id/boton_traducir"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="69dp"
-        android:layout_marginEnd="46dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="52dp"
         android:layout_marginBottom="302dp"
         android:backgroundTint="@color/teal_200"
         android:text="@string/traducir"
@@ -70,8 +84,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/selec_idioma"
-        app:layout_constraintTop_toBottomOf="@+id/cajita_texto" />
+        app:layout_constraintTop_toBottomOf="@+id/cajita_texto"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/ver_traduccion"
@@ -79,9 +93,9 @@
         android:layout_height="126dp"
         android:layout_marginStart="180dp"
         android:layout_marginTop="88dp"
-        android:layout_marginEnd="148dp"
+        android:layout_marginEnd="140dp"
         android:layout_marginBottom="184dp"
-        android:text="@string/textview"
+        android:text="Texto traducido."
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -96,15 +110,13 @@
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginStart="69dp"
-        android:layout_marginTop="69dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="50dp"
         android:backgroundTint="@color/teal_200"
         android:text="@string/idioma"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/ver_traduccion"
-        app:layout_constraintEnd_toStartOf="@+id/boton_traducir"
+        app:layout_constraintEnd_toStartOf="@+id/boton_sentimientos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cajita_texto" />
 
