@@ -26,16 +26,14 @@
                 android:layout_width="200dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="158dp"
-                android:layout_marginTop="180dp"
                 android:layout_marginEnd="159dp"
-                android:layout_marginBottom="446dp"
+                android:layout_marginBottom="32dp"
                 android:text="@string/tryit"
                 android:textSize="34sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/login"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/login"
@@ -58,26 +56,28 @@
                 android:layout_marginStart="158dp"
                 android:layout_marginTop="34dp"
                 android:layout_marginEnd="159dp"
-                android:layout_marginBottom="284dp"
                 android:text="@string/sign_in"
                 android:textSize="34sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/login" />
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="374dp"
-                android:layout_height="36dp"
-                android:layout_marginBottom="120dp"
-                android:text="Many features are available in LORE: real time traduction, sentiment analysis, and a lot more!"
+                android:layout_width="342dp"
+                android:layout_height="51dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="60dp"
+                android:text="Many features are available in LORE: real time translation, sentiment analysis and a lot more!"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/try_it"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.567"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPersonName" />
 
             <EditText
                 android:id="@+id/editTextPersonName"
@@ -87,12 +87,12 @@
                 android:autofillHints=""
                 android:background="@color/teal_200"
                 android:ems="10"
-                android:fontFamily="casual"
+                android:fontFamily="monospace"
                 android:inputType="textPersonName"
                 android:text="  LORE"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="40sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.968"
