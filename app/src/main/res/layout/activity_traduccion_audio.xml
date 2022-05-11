@@ -64,7 +64,7 @@
         android:layout_marginEnd="58dp"
         android:layout_marginBottom="240dp"
         android:backgroundTint="@android:color/holo_orange_dark"
-        android:onClick="translate"
+        android:onClick="sentiment_analysis"
         android:text="EMOCIÓN"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

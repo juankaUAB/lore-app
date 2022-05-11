@@ -35,6 +35,7 @@ import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
+import com.google.cloud.language.v1.LanguageServiceSettings;
 import com.google.cloud.speech.v1.*;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,6 +48,11 @@ import com.google.cloud.translate.Translation;
 import com.google.cloud.translate.v3.TranslationServiceClient;
 import com.google.cloud.translate.v3beta1.TranslationServiceSettings;
 import com.google.protobuf.ByteString;
+
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.Document.Type;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 
 public class TraduccionAudio extends AppCompatActivity {
     MediaRecorder recorder;
@@ -203,5 +209,38 @@ public class TraduccionAudio extends AppCompatActivity {
                 Translate.TranslateOption.model("base"));
         TextView caja_traduccion = findViewById(R.id.audio_traducido);
         caja_traduccion.setText(translation.getTranslatedText());
+    }
+
+    public void sentiment_analysis(View view) throws IOException {
+        InputStream stream = getResources().openRawResource(R.raw.credentials);
+        CredentialsProvider credentialsProvider = FixedCredentialsProvider.create(ServiceAccountCredentials.fromStream(stream));
+        LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setCredentialsProvider(credentialsProvider).build();
+        LanguageServiceClient language = LanguageServiceClient.create(settings);
+
+        Document doc = Document.newBuilder().setContent((String) texto_escuchado.getText()).setType(Type.PLAIN_TEXT).build();
+        Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
+
+        String sentiment_text = "Undeterminated sentiment";
+        if (0 < sentiment.getScore() &&  sentiment.getScore() < 0.25 && sentiment.getScore() > 1)
+        {
+            sentiment_text = "Mixed sentiments";
+        }
+        else {
+            if (0 < sentiment.getScore() && sentiment.getScore() < 0.25 && 0 < sentiment.getScore() && sentiment.getScore() < 1) {
+                sentiment_text = "Neutral text without sentiments";
+            }
+            else {
+                if (sentiment.getScore() > 0.25) {
+                    sentiment_text = "So positive text";
+                } else {
+                    if (sentiment.getScore() < 0) {
+                        sentiment_text = "So negative text";
+                    }
+                }
+            }
+        }
+
+        TextView caja_traduccion = findViewById(R.id.audio_traducido);
+        caja_traduccion.setText(sentiment_text);
     }
 }

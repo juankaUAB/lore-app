@@ -10,18 +10,27 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.api.gax.core.CredentialsProvider
+import com.google.api.gax.core.FixedCredentialsProvider
 import com.google.auth.oauth2.GoogleCredentials
+import com.google.auth.oauth2.ServiceAccountCredentials
+import com.google.cloud.language.v1.Document
+import com.google.cloud.language.v1.LanguageServiceClient
+import com.google.cloud.language.v1.LanguageServiceSettings
 import com.google.cloud.translate.Translate
 import com.google.cloud.translate.TranslateOptions
 import java.io.IOException
 import java.io.InputStream
 
+
 class TraduccionTexto : AppCompatActivity() {
     private var translate: Translate? = null
+    private var language: LanguageServiceClient? = null
     private var texto: EditText? = null
     private var boton: Button? = null
     private var traduccion: TextView? = null
     private var select_idioma: Button? = null
+    private var boton_sentimientos: Button? = null
 
     private val options = arrayOf("English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi")
     private var defaultPosition = 0
@@ -35,6 +44,7 @@ class TraduccionTexto : AppCompatActivity() {
         boton = findViewById(R.id.boton_traducir)
         traduccion = findViewById(R.id.ver_traduccion)
         select_idioma = findViewById(R.id.selec_idioma)
+        boton_sentimientos = findViewById(R.id.boton_sentimientos);
 
         select_idioma!!.setOnClickListener {
             val builderSingle = AlertDialog.Builder(this)
@@ -73,6 +83,65 @@ class TraduccionTexto : AppCompatActivity() {
                 //If not, display "no connection" warning:
                 traduccion!!.text = resources.getString(R.string.no_connection)
             }
+        }
+
+        boton_sentimientos!!.setOnClickListener {
+            var resultado = texto!!.text.toString()
+            if (checkInternetConnection()) {
+
+                //If there is internet connection, get translate service and start translation:
+                getSentimentService()
+                sentiment_analysis()
+
+            } else {
+
+                //If not, display "no connection" warning:
+                traduccion!!.text = resources.getString(R.string.no_connection)
+            }
+        }
+    }
+
+    private fun sentiment_analysis() {
+        val doc = Document.newBuilder().setContent(texto!!.text.toString()).setType(
+            Document.Type.PLAIN_TEXT
+        ).build()
+        val sentiment = language!!.analyzeSentiment(doc).documentSentiment
+
+        var sentiment_text = "Undeterminated sentiment"
+        if (0 < sentiment.score && sentiment.score < 0.25 && sentiment.score > 1) {
+            sentiment_text = "Mixed sentiments"
+        } else {
+            if (0 < sentiment.score && sentiment.score < 0.25 && 0 < sentiment.score && sentiment.score < 1) {
+                sentiment_text = "Neutral text without sentiments"
+            } else {
+                if (sentiment.score > 0.25) {
+                    sentiment_text = "So positive text"
+                } else {
+                    if (sentiment.score < 0) {
+                        sentiment_text = "So negative text"
+                    }
+                }
+            }
+        }
+
+        val caja_traduccion = findViewById<TextView>(R.id.ver_traduccion)
+        caja_traduccion.text = sentiment_text
+    }
+
+    private fun getSentimentService() {
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
+        try {
+            var stream : InputStream = resources.openRawResource(R.raw.credentials)
+            val credentialsProvider: CredentialsProvider =
+                FixedCredentialsProvider.create(ServiceAccountCredentials.fromStream(stream))
+            var settings = LanguageServiceSettings.newBuilder().setCredentialsProvider(credentialsProvider).build()
+            language = LanguageServiceClient.create(settings)
+
+        } catch (ioe: IOException) {
+            ioe.printStackTrace()
+
         }
     }
 
