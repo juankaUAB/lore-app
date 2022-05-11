@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "825172834751",
+    "project_id": "lore-bd",
+    "storage_bucket": "lore-bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825172834751:android:34c12aabd81e7cd38f090a",
+        "android_client_info": {
+          "package_name": "com.example.lore1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825172834751-3t43qm6bsq03gd8lban1t7rqrh7vcdlp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lore1",
+            "certificate_hash": "55a9c164394153e81151cf2e0a554daf9dc57ebf"
+          }
+        },
+        {
+          "client_id": "825172834751-99hdgnuluur6nasjgharesd38j4968hm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lore1",
+            "certificate_hash": "b5181fc52ba93f03258cb8ba0e5bcd5618be4e15"
+          }
+        },
+        {
+          "client_id": "825172834751-bqssbnhdpuj3rigpk9pc5gupapgpck7l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lore1",
+            "certificate_hash": "87e8b68254941a4b714a028d1491b72cddb300d9"
+          }
+        },
+        {
+          "client_id": "825172834751-pb6o2qfb3og005brkjuin4mkt6qmoa9k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAnaFrMXejU_AWbJeg6LlVrEerjAAwang"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825172834751-pb6o2qfb3og005brkjuin4mkt6qmoa9k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
