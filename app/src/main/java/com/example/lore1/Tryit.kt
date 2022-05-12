@@ -21,5 +21,11 @@ class Tryit : AppCompatActivity() {
             val lanzar = Intent(this, TraduccionAudio::class.java)
             startActivity(lanzar)
         }
+
+        val boton_tryit_imagen = findViewById<Button>(R.id.tryit_imagen)
+        boton_tryit_imagen.setOnClickListener {
+            val lanzar = Intent(this, TraduccionImagen::class.java)
+            startActivity(lanzar)
+        }
     }
 }

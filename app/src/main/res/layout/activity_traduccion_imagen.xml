@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TraduccionImagen">
+
+    <EditText
+        android:id="@+id/editImagenImagenPersonName"
+        android:layout_width="413dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="30dp"
+        android:autofillHints=""
+        android:background="@color/teal_200"
+        android:ems="10"
+        android:fontFamily="monospace"
+        android:inputType="textPersonName"
+        android:text="   TRADUCCIÓN DE IMAGEN"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="29sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.968"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <Button
+        android:id="@+id/selec_idioma_imagen"
+        android:layout_width="102dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="21dp"
+        android:text="Idioma"
+        app:layout_constraintBottom_toTopOf="@+id/boton_sentimientos_imagen"
+        app:layout_constraintEnd_toStartOf="@+id/Button_camara_image"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/boton_sentimientos_imagen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/holo_orange_dark"
+        android:text="Emoción"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/boton_galeria_imagen"
+        app:layout_constraintStart_toEndOf="@+id/boton_traducir_imagen" />
+
+    <Button
+        android:id="@+id/boton_traducir_imagen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="16dp"
+        android:text="Traducir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/boton_sentimientos_imagen"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/boton_galeria_imagen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/purple_500"
+        android:text="Galería"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/boton_sentimientos_imagen" />
+
+    <ImageButton
+        android:id="@+id/Button_camara_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="21dp"
+        android:backgroundTint="@android:color/holo_green_light"
+        app:layout_constraintBottom_toTopOf="@+id/boton_sentimientos_imagen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        app:tint="@color/white"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/slot_camara"
+        android:layout_width="332dp"
+        android:layout_height="333dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="26dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editImagenImagenPersonName"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="332dp"
+        android:layout_height="143dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
+        android:text="Traducción del texto de la imagen o sentimiento general representado."
+        app:layout_constraintBottom_toTopOf="@+id/selec_idioma_imagen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
