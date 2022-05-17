@@ -67,6 +67,7 @@ import com.google.cloud.language.v1.Sentiment;
 public class TraduccionImagen extends AppCompatActivity {
 
     ImageButton Button_camara_image;
+    Button boton_galeria_imagen;
     ImageView slot_camara;
     String ruta;
 
@@ -75,6 +76,7 @@ public class TraduccionImagen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traduccion_imagen);
         Button_camara_image = findViewById(R.id.Button_camara_image);
+        boton_galeria_imagen = findViewById(R.id.boton_galeria_imagen);
         slot_camara = findViewById(R.id.slot_camara);
 
         //Solicitar permisos de usuario para camara y acceso a galeria.
@@ -92,6 +94,13 @@ public class TraduccionImagen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 camara();
+            }
+        });
+
+        boton_galeria_imagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cargarImagen();
             }
         });
     }
@@ -116,6 +125,12 @@ public class TraduccionImagen extends AppCompatActivity {
         }
     }
 
+    private void cargarImagen(){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/");
+        startActivityForResult(intent.createChooser(intent, "Seleccione la Aplicación"), 10);
+    }
+
     //Este método captura la imagen y la envia al ImageView.
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
@@ -128,6 +143,11 @@ public class TraduccionImagen extends AppCompatActivity {
 
             //Mostramos imagen en el imageView
             slot_camara.setImageBitmap(imgBitmap);
+        }
+
+        if(requestCode == 10 && resultCode == RESULT_OK){
+            Uri path = data.getData();
+            slot_camara.setImageURI(path);
         }
     }
 
