@@ -16,5 +16,11 @@ class MainActivity : AppCompatActivity() {
             val lanzar = Intent(this, Tryit::class.java)
             startActivity(lanzar)
         }
+
+        val boton_tryit_log = findViewById<Button>(R.id.login)
+        boton_tryit_log.setOnClickListener {
+            val lanzar = Intent(this, Tryit_log::class.java)
+            startActivity(lanzar)
+        }
     }
 }

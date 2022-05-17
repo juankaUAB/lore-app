@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Tryit_log">
+
+    <Button
+        android:id="@+id/tryit_log_signout"
+        android:layout_width="200dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="79dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="SIGN OUT"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tryit_log_imagen" />
+
+    <Button
+        android:id="@+id/tryit_log_historial"
+        android:layout_width="200dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="79dp"
+        android:backgroundTint="@android:color/holo_orange_dark"
+        android:text="HISTORIAL"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tryit_log_imagen" />
+
+    <EditText
+        android:id="@+id/editTextTextlogPersonName2"
+        android:layout_width="413dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="30dp"
+        android:autofillHints=""
+        android:background="@color/teal_200"
+        android:ems="10"
+        android:fontFamily="monospace"
+        android:inputType="textPersonName"
+        android:text="   Username"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.968"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <Button
+        android:id="@+id/tryit_log_texto"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="79dp"
+        android:backgroundTint="@color/teal_200"
+        android:text="@string/traductor_de_texto"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextlogPersonName2" />
+
+    <Button
+        android:id="@+id/tryit_log_audio"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginBottom="64dp"
+        android:backgroundTint="@color/teal_200"
+        android:text="@string/traductor_de_audio"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tryit_log_imagen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tryit_log_texto" />
+
+    <Button
+        android:id="@+id/tryit_log_imagen"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="129dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="79dp"
+        android:backgroundTint="@color/teal_200"
+        android:text="TRADUCTOR DE IMAGEN"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tryit_log_audio" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

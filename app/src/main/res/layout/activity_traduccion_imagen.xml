@@ -88,7 +88,7 @@
         android:backgroundTint="@android:color/holo_green_light"
         app:layout_constraintBottom_toTopOf="@+id/boton_sentimientos_imagen"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/ver_traduccion_imagen"
         app:srcCompat="@android:drawable/ic_menu_camera"
         app:tint="@color/white"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -96,23 +96,22 @@
     <ImageView
         android:id="@+id/slot_camara"
         android:layout_width="332dp"
-        android:layout_height="333dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="11dp"
+        android:layout_height="310dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="26dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/ver_traduccion_imagen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editImagenImagenPersonName"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/editImagenImagenPersonName" />
         //tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/ver_traduccion_imagen"
         android:layout_width="332dp"
         android:layout_height="143dp"
-        android:layout_marginStart="55dp"
+        android:layout_marginStart="45dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:text="Traducción del texto de la imagen o sentimiento general representado."
