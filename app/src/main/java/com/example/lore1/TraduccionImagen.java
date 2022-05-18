@@ -168,14 +168,14 @@ public class TraduccionImagen extends AppCompatActivity {
 
             for (AnnotateImageResponse res : responses) {
                 if (res.hasError()) {
-                    ver_traduccion_imagen.setText("Error: %s%n", TextView.BufferType.valueOf(res.getError().getMessage()));
+                    String error_msg = "Error: %s%n" + res.getError().getMessage();
+                    ver_traduccion_imagen.setText(error_msg);
                     return;
                 }
 
                 // For full list of available annotations, see http://g.co/cloud/vision/docs
-                for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-                    ver_traduccion_imagen.setText("Text: %s%n", TextView.BufferType.valueOf(annotation.getDescription()));
-                }
+                String text_detected = res.getTextAnnotations(0).getDescription();
+                ver_traduccion_imagen.setText(text_detected);
             }
         }
     }
