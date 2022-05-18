@@ -10,6 +10,7 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -222,7 +223,16 @@ public class TraduccionImagen extends AppCompatActivity {
 
         if(requestCode == 10 && resultCode == RESULT_OK){
             Uri path = data.getData();
-            ruta = path.getPath();
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(path, projection, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+            ruta = cursor.getString(columnIndex);
+            cursor.close();
+
+            //File imFile = new File(path.getPath());//create path from uri
+            //ruta = imFile.getAbsolutePath();
             slot_camara.setImageURI(path);
         }
     }
