@@ -57,6 +57,7 @@ import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 import com.google.cloud.translate.v3.TranslationServiceClient;
 import com.google.cloud.translate.v3beta1.TranslationServiceSettings;
+import com.google.cloud.vision.v1.ImageAnnotatorSettings;
 import com.google.protobuf.ByteString;
 
 import com.google.cloud.language.v1.Document;
@@ -64,12 +65,23 @@ import com.google.cloud.language.v1.Document.Type;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
 
+import com.google.cloud.vision.v1.AnnotateImageRequest;
+import com.google.cloud.vision.v1.AnnotateImageResponse;
+import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
+import com.google.cloud.vision.v1.EntityAnnotation;
+import com.google.cloud.vision.v1.Feature;
+import com.google.cloud.vision.v1.Image;
+import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import java.util.ArrayList;
+
 public class TraduccionImagen extends AppCompatActivity {
 
     ImageButton Button_camara_image;
-    Button boton_galeria_imagen;
+    Button boton_galeria_imagen, traduccir;
     ImageView slot_camara;
+    TextView ver_traduccion_imagen;
     String ruta;
+    Bitmap imgBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +89,9 @@ public class TraduccionImagen extends AppCompatActivity {
         setContentView(R.layout.activity_traduccion_imagen);
         Button_camara_image = findViewById(R.id.Button_camara_image);
         boton_galeria_imagen = findViewById(R.id.boton_galeria_imagen);
+        traduccir = findViewById(R.id.boton_traducir_imagen);
         slot_camara = findViewById(R.id.slot_camara);
+        ver_traduccion_imagen = findViewById(R.id.ver_traduccion_imagen);
 
         //Solicitar permisos de usuario para camara y acceso a galeria.
         if(ContextCompat.checkSelfPermission(TraduccionImagen.this,
@@ -103,7 +117,68 @@ public class TraduccionImagen extends AppCompatActivity {
                 cargarImagen();
             }
         });
+
+        traduccir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    detectText();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
+    public void detectText() throws IOException {
+        // TODO(developer): Replace these variables before running the sample.
+        String filePath = ruta;
+        detectText(filePath);
+    }
+
+    // Detects text in the specified image.
+    public void detectText(String filePath) throws IOException {
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+
+        Image img = Image.newBuilder().setContent(imgBytes).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
+        AnnotateImageRequest request =
+                AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests. After completing all of your requests, call
+        // the "close" method on the client to safely clean up any remaining background resources.
+
+        InputStream stream = getResources().openRawResource(R.raw.credentials);
+        Credentials myCredentials = ServiceAccountCredentials.fromStream(stream);
+
+        ImageAnnotatorSettings imageAnnotatorSettings =
+                ImageAnnotatorSettings.newBuilder()
+                        .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+                        .build();
+
+
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create(imageAnnotatorSettings)) {
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    ver_traduccion_imagen.setText("Error: %s%n", TextView.BufferType.valueOf(res.getError().getMessage()));
+                    return;
+                }
+
+                // For full list of available annotations, see http://g.co/cloud/vision/docs
+                for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+                    ver_traduccion_imagen.setText("Text: %s%n", TextView.BufferType.valueOf(annotation.getDescription()));
+                }
+            }
+        }
+    }
+
     //Metodo para abrir o activar la camara.
     private void camara(){
         //La activamos con un intent que permetira capturar la imagen.
@@ -139,7 +214,7 @@ public class TraduccionImagen extends AppCompatActivity {
             //Obtenemos resultado
             //Bundle extras = data.getExtras();
             //Bitmap imgBitmap = (Bitmap) extras.get("data");
-            Bitmap imgBitmap = BitmapFactory.decodeFile(ruta);
+            imgBitmap = BitmapFactory.decodeFile(ruta);
 
             //Mostramos imagen en el imageView
             slot_camara.setImageBitmap(imgBitmap);
@@ -147,6 +222,7 @@ public class TraduccionImagen extends AppCompatActivity {
 
         if(requestCode == 10 && resultCode == RESULT_OK){
             Uri path = data.getData();
+            ruta = path.getPath();
             slot_camara.setImageURI(path);
         }
     }
