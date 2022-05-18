@@ -78,11 +78,14 @@ import java.util.ArrayList;
 public class TraduccionImagen extends AppCompatActivity {
 
     ImageButton Button_camara_image;
-    Button boton_galeria_imagen, traduccir;
+    Button boton_galeria_imagen, traduccir, sentimiento;
     ImageView slot_camara;
     TextView ver_traduccion_imagen;
     String ruta;
     Bitmap imgBitmap;
+    CharSequence[] options = new CharSequence[] {"English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi"};
+    int defaultOption = 0;
+    String target_language = "en";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,7 @@ public class TraduccionImagen extends AppCompatActivity {
         Button_camara_image = findViewById(R.id.Button_camara_image);
         boton_galeria_imagen = findViewById(R.id.boton_galeria_imagen);
         traduccir = findViewById(R.id.boton_traducir_imagen);
+        sentimiento = findViewById(R.id.boton_sentimientos_imagen);
         slot_camara = findViewById(R.id.slot_camara);
         ver_traduccion_imagen = findViewById(R.id.ver_traduccion_imagen);
 
@@ -124,12 +128,61 @@ public class TraduccionImagen extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     detectText();
+                    translate();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        sentimiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    detectText();
+                    sentiment_analysis();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
     }
+
+    public void setLanguage(View view) {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+        builderSingle.setTitle("Select");
+        builderSingle.setPositiveButton(android.R.string.ok, (dialog, which) -> { dialog.dismiss(); });
+        builderSingle.setSingleChoiceItems(options, defaultOption, (dialog1, item) -> {
+            defaultOption = item;
+            if ("English".equals(options[item])) {
+                target_language = "en";
+            } else if ("Spanish".equals(options[item])) {
+                target_language = "es";
+            } else if ("Portuguese".equals(options[item])) {
+                target_language = "pt";
+            } else if ("Catalan".equals(options[item])) {
+                target_language = "ca";
+            } else if ("French".equals(options[item])) {
+                target_language = "fr";
+            } else if ("Chinese".equals(options[item])) {
+                target_language = "zh-CN";
+            } else if ("German".equals(options[item])) {
+                target_language = "de";
+            } else if ("Russian".equals(options[item])) {
+                target_language = "ru";
+            } else if ("Euskera".equals(options[item])) {
+                target_language = "eu";
+            } else if ("Japanese".equals(options[item])) {
+                target_language = "ja";
+            } else if ("Hindi".equals(options[item])) {
+                target_language = "hi";
+            }
+        });
+        builderSingle.show();
+    }
+
 
     public void detectText() throws IOException {
         // TODO(developer): Replace these variables before running the sample.
@@ -179,6 +232,54 @@ public class TraduccionImagen extends AppCompatActivity {
             }
         }
     }
+
+    public void translate() throws IOException {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        InputStream stream = getResources().openRawResource(R.raw.credentials);
+        TranslateOptions translate_options = TranslateOptions.newBuilder().setCredentials(GoogleCredentials.fromStream(stream)).build();
+        Translate translate = translate_options.getService();
+
+        Translation translation = translate.translate(
+                String.valueOf(ver_traduccion_imagen.getText()),
+                Translate.TranslateOption.targetLanguage(target_language),
+                Translate.TranslateOption.model("base"));
+        ver_traduccion_imagen.setText(translation.getTranslatedText());
+    }
+
+
+    public void sentiment_analysis() throws IOException {
+        InputStream stream = getResources().openRawResource(R.raw.credentials);
+        CredentialsProvider credentialsProvider = FixedCredentialsProvider.create(ServiceAccountCredentials.fromStream(stream));
+        LanguageServiceSettings settings = LanguageServiceSettings.newBuilder().setCredentialsProvider(credentialsProvider).build();
+        LanguageServiceClient language = LanguageServiceClient.create(settings);
+
+        Document doc = Document.newBuilder().setContent((String) ver_traduccion_imagen.getText()).setType(Type.PLAIN_TEXT).build();
+        Sentiment sentiment = language.analyzeSentiment(doc).getDocumentSentiment();
+
+        String sentiment_text = "Undeterminated sentiment";
+        if (0 < sentiment.getScore() &&  sentiment.getScore() < 0.25 && sentiment.getScore() > 1)
+        {
+            sentiment_text = "Mixed sentiments";
+        }
+        else {
+            if (0 < sentiment.getScore() && sentiment.getScore() < 0.25 && 0 < sentiment.getScore() && sentiment.getScore() < 1) {
+                sentiment_text = "Neutral text without sentiments";
+            }
+            else {
+                if (sentiment.getScore() > 0.25) {
+                    sentiment_text = "So positive text";
+                } else {
+                    if (sentiment.getScore() < 0) {
+                        sentiment_text = "So negative text";
+                    }
+                }
+            }
+        }
+        ver_traduccion_imagen.setText(sentiment_text);
+    }
+
 
     //Metodo para abrir o activar la camara.
     private void camara(){
