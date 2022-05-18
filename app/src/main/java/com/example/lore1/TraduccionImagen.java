@@ -85,7 +85,7 @@ public class TraduccionImagen extends AppCompatActivity {
     Bitmap imgBitmap;
     CharSequence[] options = new CharSequence[] {"English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi"};
     int defaultOption = 0;
-    String target_language = "en";
+    String target_language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

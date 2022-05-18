@@ -34,6 +34,7 @@
         android:layout_marginStart="70dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="21dp"
+        android:onClick="setLanguage"
         android:text="Idioma"
         app:layout_constraintBottom_toTopOf="@+id/boton_sentimientos_imagen"
         app:layout_constraintEnd_toStartOf="@+id/Button_camara_image"
