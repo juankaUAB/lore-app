@@ -62,8 +62,9 @@ public class TraduccionAudio extends AppCompatActivity {
     FloatingActionButton startButton,stopButton;
     TextView texto_escuchado;
     CharSequence[] options = new CharSequence[] {"English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi"};
+    CharSequence[] options_origin = new CharSequence[] {"English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi"};
     int defaultOption = 0;
-    String target_language;
+    String target_language, input_language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +144,7 @@ public class TraduccionAudio extends AppCompatActivity {
                 RecognitionConfig.newBuilder()
                         // encoding may either be omitted or must match the value in the file header
                         .setEncoding(RecognitionConfig.AudioEncoding.AMR_WB)
-                        .setLanguageCode("en-US")
+                        .setLanguageCode(input_language) //input_language ".
                         // sample rate hertz may be either be omitted or must match the value in the file
                         // header
                         .setSampleRateHertz(16000)
@@ -162,9 +163,42 @@ public class TraduccionAudio extends AppCompatActivity {
         texto_escuchado.setText(alternative.getTranscript());
     }
 
+    public void setOriginLanguage(View view) {
+        AlertDialog.Builder builderSingle_origin = new AlertDialog.Builder(this);
+        builderSingle_origin.setTitle("Select recorder language");
+        builderSingle_origin.setPositiveButton(android.R.string.ok, (dialog2, which) -> { dialog2.dismiss(); });
+        builderSingle_origin.setSingleChoiceItems(options_origin, defaultOption, (dialog3, item_origin) -> {
+            defaultOption = item_origin;
+            if ("English".equals(options_origin[item_origin])) {
+                input_language = "en-US";
+            } else if ("Spanish".equals(options_origin[item_origin])) {
+                input_language = "es-ES";
+            } else if ("Portuguese".equals(options_origin[item_origin])) {
+                input_language = "pt-PT";
+            } else if ("Catalan".equals(options_origin[item_origin])) {
+                input_language = "ca-ES";
+            } else if ("French".equals(options_origin[item_origin])) {
+                input_language = "fr-FR";
+            } else if ("Chinese".equals(options_origin[item_origin])) {
+                input_language = "zh-CN";
+            } else if ("German".equals(options_origin[item_origin])) {
+                input_language = "de-DE";
+            } else if ("Russian".equals(options_origin[item_origin])) {
+                input_language = "ru-RU";
+            } else if ("Euskera".equals(options_origin[item_origin])) {
+                input_language = "eu-ES";
+            } else if ("Japanese".equals(options_origin[item_origin])) {
+                input_language = "ja-JP";
+            } else if ("Hindi".equals(options_origin[item_origin])) {
+                input_language = "hi-IN";
+            }
+        });
+        builderSingle_origin.show();
+    }
+
     public void setLanguage(View view) {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-        builderSingle.setTitle("Select");
+        builderSingle.setTitle("Select translation language");
         builderSingle.setPositiveButton(android.R.string.ok, (dialog, which) -> { dialog.dismiss(); });
         builderSingle.setSingleChoiceItems(options, defaultOption, (dialog1, item) -> {
             defaultOption = item;
