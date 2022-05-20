@@ -64,7 +64,8 @@ public class TraduccionAudio extends AppCompatActivity {
     CharSequence[] options = new CharSequence[] {"English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi"};
     CharSequence[] options_origin = new CharSequence[] {"English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi"};
     int defaultOption = 0;
-    String target_language, input_language;
+    String target_language = "en";
+    String input_language = "en-US";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +149,7 @@ public class TraduccionAudio extends AppCompatActivity {
                         // sample rate hertz may be either be omitted or must match the value in the file
                         // header
                         .setSampleRateHertz(16000)
-                        .setModel("video")
+                        .setModel("default")
                         .build();
 
         RecognitionAudio recognitionAudio =
