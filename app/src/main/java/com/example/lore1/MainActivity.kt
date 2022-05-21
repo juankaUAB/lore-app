@@ -22,5 +22,11 @@ class MainActivity : AppCompatActivity() {
             val lanzar = Intent(this, Tryit_log::class.java)
             startActivity(lanzar)
         }
+
+        val boton_signin = findViewById<Button>(R.id.signin)
+        boton_signin.setOnClickListener {
+            val lanzar = Intent(this, SignIn::class.java)
+            startActivity(lanzar)
+        }
     }
 }

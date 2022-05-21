@@ -39,5 +39,7 @@ class Tryit_log : AppCompatActivity() {
             val lanzar = Intent(this, MainActivity::class.java)
             startActivity(lanzar)
         }
+
+
     }
 }
