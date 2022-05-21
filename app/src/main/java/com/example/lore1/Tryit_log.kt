@@ -40,6 +40,5 @@ class Tryit_log : AppCompatActivity() {
             startActivity(lanzar)
         }
 
-
     }
 }

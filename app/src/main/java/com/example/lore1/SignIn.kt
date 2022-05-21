@@ -50,8 +50,9 @@ class SignIn : AppCompatActivity() {
                             val lanzar = Intent(this, Tryit_log::class.java)
                             startActivity(lanzar)
                         } else{
-                            print("Error logging with Google");
-
+                            //Error logging with Google
+                            val lanzar = Intent(this, MainActivity::class.java)
+                            startActivity(lanzar)
                         }
                     }
 
