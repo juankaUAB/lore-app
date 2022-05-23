@@ -26,52 +26,38 @@
                 android:layout_width="200dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="158dp"
+                android:layout_marginTop="90dp"
                 android:layout_marginEnd="159dp"
-                android:layout_marginBottom="32dp"
                 android:text="@string/tryit"
-                android:textSize="34sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/login"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <Button
-                android:id="@+id/login"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="158dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="159dp"
-                android:text="@string/login"
                 android:textSize="34sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/try_it" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
             <Button
                 android:id="@+id/signin"
                 android:layout_width="200dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="158dp"
-                android:layout_marginTop="34dp"
+                android:layout_marginTop="70dp"
                 android:layout_marginEnd="159dp"
-                android:text="@string/sign_in"
-                android:textSize="34sp"
+                android:text="sign in with Google!"
+                android:textSize="23sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login" />
+                app:layout_constraintTop_toBottomOf="@+id/try_it" />
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="342dp"
-                android:layout_height="51dp"
+                android:layout_width="345dp"
+                android:layout_height="64dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="60dp"
-                android:text="Many features are available in LORE: real time translation, sentiment analysis and a lot more!"
+                android:layout_marginBottom="90dp"
+                android:text="Many features are available in LORE: text, audio and image translation, text sentiment analysis and a lot more!"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/try_it"
                 app:layout_constraintEnd_toEndOf="parent"
