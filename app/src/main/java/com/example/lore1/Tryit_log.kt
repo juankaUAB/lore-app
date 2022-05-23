@@ -51,7 +51,7 @@ class Tryit_log : AppCompatActivity() {
         //val boton_signout = findViewById<Button>(R.id.tryit_log_signout)
         binding.tryitLogSignout.setOnClickListener {
 
-            Firebase.auth.signOut();
+            Firebase.auth.signOut()
 
             val lanzar = Intent(this, MainActivity::class.java)
             startActivity(lanzar)
