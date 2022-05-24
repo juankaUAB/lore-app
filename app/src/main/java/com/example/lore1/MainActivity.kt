@@ -1,11 +1,15 @@
 package com.example.lore1
 
+import android.Manifest
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.lore1.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -27,12 +31,40 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        //setContentView(R.layout.activity_main)
         setContentView(binding.root)
+
+        // Solicitar permisos del usuario para CAMARA, MICROFONO y acceso de lectura, escritura
+        // y almacenamiento del dispositivo.
+        if ((ContextCompat.checkSelfPermission(
+                this@MainActivity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+                    != PackageManager.PERMISSION_GRANTED) && ActivityCompat.checkSelfPermission(
+                this@MainActivity,
+                Manifest.permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this@MainActivity,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this@MainActivity,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this@MainActivity,
+                Manifest.permission.MANAGE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this@MainActivity, arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.RECORD_AUDIO,  Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.MANAGE_EXTERNAL_STORAGE
+                ), 1000
+            )
+        }
 
         auth = Firebase.auth
 
-        // Configure Google Sign In
+        // Configuración del sign in vía Google
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("825172834751-pb6o2qfb3og005brkjuin4mkt6qmoa9k.apps.googleusercontent.com")
             .requestEmail()
@@ -41,22 +73,27 @@ class MainActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
 
+        // Definición del boton Try it que al clickar te permite usar la app sin realizar sign in.
         val boton_tryit = findViewById<Button>(R.id.try_it)
         boton_tryit.setOnClickListener {
             val lanzar = Intent(this, Tryit::class.java)
             startActivity(lanzar)
         }
 
+        // Definición del boton Sign in que al clickar te permite registrarte mediante Google y usar
+        // la app en modo usuario.
         binding.signin.setOnClickListener {
             signIn()
         }
     }
 
+    //Funcion que genera un request de sign in para el usuario.
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
+    //Funcion que capta el request del sign in del usuario y intenta loggearlo en la base de datos.
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -75,6 +112,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Funcion que verifica si ha habido o no un error en la autentificación de firebase del usuario.
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
@@ -92,6 +130,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    //Funcion que actualiza el layout una vez se detecte el usuario del sign in.
     private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             val intent = Intent(applicationContext, Tryit_log::class.java)
@@ -100,6 +139,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Estructura de datos donde almacenamos el codigo de sign in y el nombre de usuario.
     companion object {
         const val RC_SIGN_IN = 1001
         const val EXTRA_NAME = "EXTRA_NAME"

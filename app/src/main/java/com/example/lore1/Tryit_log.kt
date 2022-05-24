@@ -16,39 +16,42 @@ class Tryit_log : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_tryit_log)
         binding = ActivityTryitLogBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Obtenemos el nombre de usuario y lo mostramos en el textview de username.
         var nombreUser = intent.getStringExtra(EXTRA_NAME)
-
         binding.username.setText(nombreUser)
 
+        // Definición del boton que al hacer click te lleva al layout de la traduccion de texto.
         val boton_tryit_texto = findViewById<Button>(R.id.tryit_log_texto)
         boton_tryit_texto.setOnClickListener {
             val lanzar = Intent(this, TraduccionTexto::class.java)
             startActivity(lanzar)
         }
 
+        // Definición del boton que al hacer click te lleva al layout de la traduccion de audio.
         val boton_tryit_audio = findViewById<Button>(R.id.tryit_log_audio)
         boton_tryit_audio.setOnClickListener {
             val lanzar = Intent(this, TraduccionAudio::class.java)
             startActivity(lanzar)
         }
 
+        // Definición del boton que al hacer click te lleva al layout de la traduccion de imagen.
         val boton_tryit_imagen = findViewById<Button>(R.id.tryit_log_imagen)
         boton_tryit_imagen.setOnClickListener {
             val lanzar = Intent(this, TraduccionImagen::class.java)
             startActivity(lanzar)
         }
 
+        // Definición del boton que al hacer click te lleva al layout del historial del usuario.
         val boton_historial = findViewById<Button>(R.id.tryit_log_historial)
         boton_historial.setOnClickListener {
             val lanzar = Intent(this, Historial::class.java)
             startActivity(lanzar)
         }
 
-        //val boton_signout = findViewById<Button>(R.id.tryit_log_signout)
+        // Definición del boton que al hacer click realiza el sign out y te lleva al layout del mainActivity.
         binding.tryitLogSignout.setOnClickListener {
 
             Firebase.auth.signOut()

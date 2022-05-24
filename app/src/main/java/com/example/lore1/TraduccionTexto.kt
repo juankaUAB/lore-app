@@ -40,12 +40,15 @@ class TraduccionTexto : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_traduccion_texto)
 
+        // Assignamos los componentes del layout de traducción de imagen a las variables correspondientes.
         texto = findViewById(R.id.cajita_texto)
         boton = findViewById(R.id.boton_traducir)
         traduccion = findViewById(R.id.ver_traduccion)
         select_idioma = findViewById(R.id.selec_idioma)
         boton_sentimientos = findViewById(R.id.boton_sentimientos);
 
+        // Definición del boton que al hacer click muestra el menu de selección del idioma
+        // al usuario y permite marcar uno para la traducción del texto detectado.
         select_idioma!!.setOnClickListener {
             val builderSingle = AlertDialog.Builder(this)
             builderSingle.setTitle("Select")
@@ -69,9 +72,12 @@ class TraduccionTexto : AppCompatActivity() {
             builderSingle.show()
         }
 
-
+        // Definición del boton que al hacer click realiza la traducción del texto
+        // segun el idioma de destino seleccionado.
         boton!!.setOnClickListener {
             var resultado = texto!!.text.toString()
+
+            // Comprobamos si hay conexion a internet.
             if (checkInternetConnection()) {
 
                 //If there is internet connection, get translate service and start translation:
@@ -85,6 +91,8 @@ class TraduccionTexto : AppCompatActivity() {
             }
         }
 
+        // Definición del boton que al hacer click capta el sentimiento general
+        // del texto introducido por el usuario.
         boton_sentimientos!!.setOnClickListener {
             var resultado = texto!!.text.toString()
             if (checkInternetConnection()) {
@@ -101,6 +109,7 @@ class TraduccionTexto : AppCompatActivity() {
         }
     }
 
+    // Función que llama a la API de Natural Language y asigna sentimiento segun el resultado que devuelva.
     private fun sentiment_analysis() {
         val doc = Document.newBuilder().setContent(texto!!.text.toString()).setType(
             Document.Type.PLAIN_TEXT
@@ -128,6 +137,7 @@ class TraduccionTexto : AppCompatActivity() {
         caja_traduccion.text = sentiment_text
     }
 
+    // Función que habilita el uso de la API de Natural Language mediante las credenciales del proyecto Cloud.
     private fun getSentimentService() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -145,6 +155,7 @@ class TraduccionTexto : AppCompatActivity() {
         }
     }
 
+    // Función que habilita el uso de la API de Text Translation mediante las credenciales del proyecto Cloud.
     private fun getTranslateService() {
 
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -163,6 +174,8 @@ class TraduccionTexto : AppCompatActivity() {
 
     }
 
+    // Función que llama a la API de Text Translation de Google y devuelve el texto traducido
+    // segun el lenguaje de destino escogido por el usuario.
     private fun translate() {
 
         //Get input text to be translated:
@@ -174,6 +187,7 @@ class TraduccionTexto : AppCompatActivity() {
 
     }
 
+    // Función que comprueba si el dispositivo dispone o no de conexion a internet.
     private fun checkInternetConnection(): Boolean {
 
         //Check internet connection:

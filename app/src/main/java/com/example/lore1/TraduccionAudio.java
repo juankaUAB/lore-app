@@ -3,8 +3,12 @@ package com.example.lore1;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,19 +68,23 @@ public class TraduccionAudio extends AppCompatActivity {
     CharSequence[] options = new CharSequence[] {"English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi"};
     CharSequence[] options_origin = new CharSequence[] {"English","Spanish","Portuguese","Catalan","French","Chinese","German","Russian","Euskera","Japanese","Hindi"};
     int defaultOption = 0;
-    String target_language = "en";
     String input_language = "en-US";
+    String target_language = "en";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Assignamos los componentes del layout de traducción de imagen a las variables correspondientes.
         setContentView(R.layout.activity_traduccion_audio);
         startButton = (FloatingActionButton) findViewById(R.id.original_audio_button);
         stopButton = (FloatingActionButton) findViewById(R.id.original_pause_button);
         texto_escuchado = findViewById(R.id.audio_escuchado);
     }
 
-
+    // Metodo que habilita y inicia la funcion de audio recording de la app utilizando el microfono
+    // del dispositivo al pulsar el boton con el simbolo del micro.
     public void startRecording(View view) throws IOException {
         startButton.setEnabled(false);
         stopButton.setEnabled(true);
@@ -98,6 +106,8 @@ public class TraduccionAudio extends AppCompatActivity {
         recorder.start();
     }
 
+    // Metodo que al pulsar el boton de pause finaliza el recording de audio, genera el archivo temporal y
+    // llama a la Api de Speech-to-Text
     public void stopRecording(View view) throws IOException {
         startButton.setEnabled(true);
         stopButton.setEnabled(false);
@@ -111,6 +121,8 @@ public class TraduccionAudio extends AppCompatActivity {
 
     }
 
+    // Metodo que realiza un guardado temporal del archivo de audio escuchado para poder
+    // utilizarlo como input para la API Speech-to-Text.
     protected void addRecordingToMediaLibrary() {
         //creating content values of size 4
         ContentValues values = new ContentValues(4);
@@ -131,6 +143,9 @@ public class TraduccionAudio extends AppCompatActivity {
         Toast.makeText(this, "Added File " + newUri, Toast.LENGTH_LONG).show();
     }
 
+    // Metodo que habilita el uso de la API Speech-to-Text de Google mediante las credenciales del
+    // proyecto Cloud y devuelve el texto escuchado segun el idioma de origen que el usuario
+    // ha especificado en setOriginLanguage().
     @RequiresApi(api = Build.VERSION_CODES.O)
     protected void speechtotext() throws IOException {
         InputStream stream = getResources().openRawResource(R.raw.credentials);
@@ -164,6 +179,8 @@ public class TraduccionAudio extends AppCompatActivity {
         texto_escuchado.setText(alternative.getTranscript());
     }
 
+    // Metodo que muestra el menu de selección del idioma que el usuario quiere que el audio detecte
+    // y permite marcarlo.
     public void setOriginLanguage(View view) {
         AlertDialog.Builder builderSingle_origin = new AlertDialog.Builder(this);
         builderSingle_origin.setTitle("Select recorder language");
@@ -197,6 +214,8 @@ public class TraduccionAudio extends AppCompatActivity {
         builderSingle_origin.show();
     }
 
+    // Metodo que muestra el menu de selección del idioma al usuario
+    // y permite marcar uno para la traducción del texto detectado.
     public void setLanguage(View view) {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         builderSingle.setTitle("Select translation language");
@@ -230,6 +249,8 @@ public class TraduccionAudio extends AppCompatActivity {
         builderSingle.show();
     }
 
+    // Metodo que habilita el uso de la API de Text Translation mediante las credenciales del proyecto Cloud
+    // y devuelve el texto detectado traducido segun el lenguaje de destino escogido por el usuario.
     public void translate(View view) throws IOException {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -246,6 +267,8 @@ public class TraduccionAudio extends AppCompatActivity {
         caja_traduccion.setText(translation.getTranslatedText());
     }
 
+    // Metodo que habilita el uso de la API de Natural Language mediante las credenciales del proyecto Cloud
+    // y asigna sentimiento general al texto detectado segun el resultado que devuelva.
     public void sentiment_analysis(View view) throws IOException {
         InputStream stream = getResources().openRawResource(R.raw.credentials);
         CredentialsProvider credentialsProvider = FixedCredentialsProvider.create(ServiceAccountCredentials.fromStream(stream));

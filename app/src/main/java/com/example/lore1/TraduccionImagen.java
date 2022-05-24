@@ -91,6 +91,8 @@ public class TraduccionImagen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traduccion_imagen);
+
+        // Assignamos los componentes del layout de traducción de imagen a las variables correspondientes.
         Button_camara_image = findViewById(R.id.Button_camara_image);
         boton_galeria_imagen = findViewById(R.id.boton_galeria_imagen);
         traduccir = findViewById(R.id.boton_traducir_imagen);
@@ -98,20 +100,7 @@ public class TraduccionImagen extends AppCompatActivity {
         slot_camara = findViewById(R.id.slot_camara);
         ver_traduccion_imagen = findViewById(R.id.ver_traduccion_imagen);
 
-        //Solicitar permisos de usuario para camara y acceso a galeria.
-        if(ContextCompat.checkSelfPermission(TraduccionImagen.this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.
-                checkSelfPermission(TraduccionImagen.this,
-                        Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.
-                        checkSelfPermission(TraduccionImagen.this,
-                                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(TraduccionImagen.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE}, 1000);
-        }
-
+        // Definición del boton que al hacer click utiliza la camara del dispositivo para tomar imagenes.
         Button_camara_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,6 +108,7 @@ public class TraduccionImagen extends AppCompatActivity {
             }
         });
 
+        // Definición del boton que al hacer click accede a la galeria para seleccionar una imagen.
         boton_galeria_imagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +116,8 @@ public class TraduccionImagen extends AppCompatActivity {
             }
         });
 
+        // Definición del boton que al hacer click capta y traduce el texto de la imagen seleccionada
+        // segun el idioma escogido.
         traduccir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,6 +131,8 @@ public class TraduccionImagen extends AppCompatActivity {
             }
         });
 
+        // Definición del boton que al hacer click capta el texto de la imagen seleccionada
+        // y extrae el sentimiento generalizado de ese texto.
         sentimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,6 +147,8 @@ public class TraduccionImagen extends AppCompatActivity {
         });
     }
 
+    // Metodo que muestra el menu de selección del idioma al usuario
+    // y permite marcar uno para la traducción del texto detectado.
     public void setLanguage(View view) {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         builderSingle.setTitle("Select");
@@ -186,14 +182,14 @@ public class TraduccionImagen extends AppCompatActivity {
         builderSingle.show();
     }
 
-
+    // Metodo que hace de constructor para detectText.
     public void detectText() throws IOException {
-        // TODO(developer): Replace these variables before running the sample.
         String filePath = ruta;
         detectText(filePath);
     }
 
-    // Detects text in the specified image.
+    // Metodo que habilita el uso de la API Vision de Google mediante las credenciales del proyecto Cloud
+    // y devuelve el texto detectado de la imagen seleccionada.
     public void detectText(String filePath) throws IOException {
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
@@ -236,6 +232,8 @@ public class TraduccionImagen extends AppCompatActivity {
         }
     }
 
+    // Metodo que habilita el uso de la API de Text Translation mediante las credenciales del proyecto Cloud
+    // y devuelve el texto detectado traducido segun el lenguaje de destino escogido por el usuario.
     public void translate() throws IOException {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -251,7 +249,8 @@ public class TraduccionImagen extends AppCompatActivity {
         ver_traduccion_imagen.setText(translation.getTranslatedText());
     }
 
-
+    // Metodo que habilita el uso de la API de Natural Language mediante las credenciales del proyecto Cloud
+    // y asigna sentimiento general al texto detectado segun el resultado que devuelva.
     public void sentiment_analysis() throws IOException {
         InputStream stream = getResources().openRawResource(R.raw.credentials);
         CredentialsProvider credentialsProvider = FixedCredentialsProvider.create(ServiceAccountCredentials.fromStream(stream));
@@ -284,60 +283,28 @@ public class TraduccionImagen extends AppCompatActivity {
     }
 
 
-    //Metodo para abrir o activar la camara.
+    // Metodo para abrir o activar la camara.
     private void camara(){
-        //La activamos con un intent que permetira capturar la imagen.
+        //Activamos la camara con un intent que permetira capturar la imagen.
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
         //Validamos si el recurso esta disponible.
         if(intent.resolveActivity(getPackageManager())!= null){
             File fotoArchivo = null;
+
+            // Una vez tomada la fotografia intentamos guardarla en la galeria.
             try{
                 fotoArchivo = GuardarImagen();
             }catch(IOException ex){
                 Log.e("error", ex.toString());
             }
-            //Validamos si no hay otra imagen tomada ya
+
+            //Validamos si la imagen ha podido guardarse y en caso de ser asi generamos una actividad de camara.
             if(fotoArchivo != null){
                 Uri uri = FileProvider.getUriForFile(this, "com.lore1.mycamera.fileprovider", fotoArchivo);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(intent, 1);
             }
-        }
-    }
-
-    private void cargarImagen(){
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/");
-        startActivityForResult(intent.createChooser(intent, "Seleccione la Aplicación"), 10);
-    }
-
-    //Este método captura la imagen y la envia al ImageView.
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        //Validamos el resultado de la actividad
-        if(requestCode == 1 && resultCode == RESULT_OK){
-            //Obtenemos resultado
-            //Bundle extras = data.getExtras();
-            //Bitmap imgBitmap = (Bitmap) extras.get("data");
-            imgBitmap = BitmapFactory.decodeFile(ruta);
-
-            //Mostramos imagen en el imageView
-            slot_camara.setImageBitmap(imgBitmap);
-        }
-
-        if(requestCode == 10 && resultCode == RESULT_OK){
-            Uri path = data.getData();
-            String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(path, projection, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(projection[0]);
-            ruta = cursor.getString(columnIndex);
-            cursor.close();
-
-            //File imFile = new File(path.getPath());//create path from uri
-            //ruta = imFile.getAbsolutePath();
-            slot_camara.setImageURI(path);
         }
     }
 
@@ -350,4 +317,40 @@ public class TraduccionImagen extends AppCompatActivity {
         return foto;
     }
 
+    //Este método carga una imagen de la galeria y genera una actividad de imagen cargada.
+    private void cargarImagen(){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/");
+        startActivityForResult(intent.createChooser(intent, "Seleccione la Aplicación"), 10);
+    }
+
+    //Este método captura el resultado de la actividad de la imagen y la envia al ImageView.
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        // Si la actividad proviene de hacer una fotografia con la camara la tratamos aqui.
+        if(requestCode == 1 && resultCode == RESULT_OK){
+            //Obtenemos resultado
+            imgBitmap = BitmapFactory.decodeFile(ruta);
+
+            //Mostramos imagen en el imageView
+            slot_camara.setImageBitmap(imgBitmap);
+        }
+
+        // Si la actividad proviene de cargar una imagen de la galeria la tratamos aqui.
+        if(requestCode == 10 && resultCode == RESULT_OK){
+            //Obtenemos resultado
+            Uri path = data.getData();
+
+            //Obtenemos y tratamos el path absoluto de la imagen del dispositivo.
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getContentResolver().query(path, projection, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(projection[0]);
+            ruta = cursor.getString(columnIndex);
+            cursor.close();
+
+            //Mostramos imagen en el imageView
+            slot_camara.setImageURI(path);
+        }
+    }
 }
